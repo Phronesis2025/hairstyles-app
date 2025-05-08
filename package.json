@@ -1,0 +1,16 @@
+{
+  "name": "hairstyles-app",
+  "version": "1.0.0",
+  "description": "Hairstyle visualization app with React and Express",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
