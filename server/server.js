@@ -1,10 +1,13 @@
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-app.get("/test", (req, res) => {
-  res.send("Test route updated");
+app.get("/health", (req, res) => {
+  res.json({ status: "Server updated" });
 });
 
 app.listen(port, () => {
