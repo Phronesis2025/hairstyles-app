@@ -26,7 +26,7 @@ Files for Review
 
 Current State
 **Date**: May 8, 2025
-**Progress**: Implemented future improvement: added concurrently to run frontend (/client) and backend (/server) dev servers simultaneously from /hairstyles-app root. Installed concurrently globally and locally, updated root package.json with dev script. Tested with temporary server.js (localhost:5000) and existing frontend (localhost:5173). Auto-restart and hot-reload verified. Committed to GitHub. Ready for Node.js/Express backend setup with full configuration.
+**Progress**: Initialized Node.js/Express backend in /hairstyles-app/server with ES module syntax, /health route, and dotenv for PORT configuration. Installed express and dotenv, set PORT=5000. Tested at localhost:5000/health with JSON response using npm run dev (nodemon). Verified concurrently runs both servers from root. Committed to GitHub. Ready for Supabase setup.
 **Blockers**: None
 **Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app).
 **Errors**:
@@ -86,7 +86,7 @@ Phase Checklists
   - [x] Install: `npm install express dotenv`
   - [x] Create server.js with /health route
   - [x] Add .env with PORT=5000
-  - [x] Test: `node server.js` (localhost:5000/health)
+  - [x] Test: `npm run dev` (localhost:5000/health)
 
 Set up Supabase  
  Create a Supabase project  
