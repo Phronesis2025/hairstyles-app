@@ -26,9 +26,9 @@ Files for Review
 
 Current State
 **Date**: May 8, 2025
-**Progress**: Implemented future improvement: added nodemon script for auto-restarting Express server in /hairstyles-app/server. Installed nodemon, updated package.json with dev script, and tested with temporary server.js. Auto-restart verified. Committed to GitHub. Ready for Node.js/Express backend setup with full configuration.
+**Progress**: Implemented future improvement: added concurrently to run frontend (/client) and backend (/server) dev servers simultaneously from /hairstyles-app root. Installed concurrently globally and locally, updated root package.json with dev script. Tested with temporary server.js (localhost:5000) and existing frontend (localhost:5173). Auto-restart and hot-reload verified. Committed to GitHub. Ready for Node.js/Express backend setup with full configuration.
 **Blockers**: None
-**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173); GitHub (https://github.com/your-username/hairstyles-app).
+**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app).
 **Errors**:
 
 - [May 8, 2025]: “npm error could not determine executable to run” when running `npx tailwindcss init -p`. Fixed by clearing npm cache and reinstalling dependencies.
@@ -267,6 +267,7 @@ Hi Grok, I’m continuing work on my hairstyle visualization app in a new conver
 
 - **Phase 1**:
   - **Add nodemon script**: Implemented nodemon for auto-restarting Express server during development. Added `dev` script to /server/package.json. Tested with temporary server.js. Saves time on server reloads. (Cost: Free, npm install -D nodemon)
+  - **Use concurrently**: Added concurrently to run frontend and backend dev servers simultaneously from the root. Added `dev` script to /hairstyles-app/package.json. Tested with temporary server.js and existing frontend. Simplifies development with one command. (Cost: Free, npm install -g concurrently)
 
 **Additional Context**:
 
