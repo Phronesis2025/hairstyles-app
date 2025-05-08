@@ -1,27 +1,19 @@
-import "./App.css";
+import "./index.css";
 
 function App() {
   return (
-    <div style={{ minHeight: "100vh" }}>
-      <header
-        style={{
-          backgroundColor: "#00A651",
-          color: "#FFFFFF",
-          padding: "1rem",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "1.875rem",
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
+    <div className="min-h-screen bg-gc-light-gray">
+      <header className="bg-gc-green text-gc-white py-4">
+        <h1 className="text-3xl font-bold text-center font-inter">
           Hairstyle Visualizer
         </h1>
       </header>
-      <main style={{ maxWidth: "1280px", margin: "0 auto", padding: "1rem" }}>
-        <p>Welcome to the Hairstyle Visualizer!</p>
+      <main className="container mx-auto p-6">
+        <div className="bg-gc-white rounded-lg shadow-sm p-6">
+          <p className="text-gc-dark-gray text-center font-inter">
+            Welcome to the Hairstyle Visualizer!
+          </p>
+        </div>
       </main>
     </div>
   );

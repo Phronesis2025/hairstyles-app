@@ -25,12 +25,18 @@ Files for Review
 [None yet; list files as needed, e.g., client/src/components/PhotoUpload.jsx]
 
 Current State
-**Date**: [e.g., May 8, 2025]
-**Progress**: Initialized React frontend with Vite in /hairstyles-app/client. Installed dependencies and tested at localhost:5173. Created minimal App.jsx with Great Clips-inspired header. Committed to GitHub. Ready for Tailwind CSS setup.
-**Blockers**: [None or describe any issues]
-**Environment**: Local development (Node.js 20.x, Cursor paid plan, localhost:5173); GitHub (https://github.com/your-username/hairstyles-app).
-**Errors**: [None or log errors, e.g., “Vite failed to start, fixed by reinstalling dependencies”]
-To-Do List
+**Date**: May 8, 2025
+**Progress**: Initialized Node.js/Express backend in /hairstyles-app/server with ES module syntax and /health route. Installed express and dotenv, set PORT=5000. Tested at localhost:5000/health with JSON response. Committed to GitHub. Ready for Supabase setup.
+**Blockers**: None
+**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app).
+**Errors**:
+
+- [May 8, 2025]: “npm error could not determine executable to run” when running `npx tailwindcss init -p`. Fixed by clearing npm cache and reinstalling dependencies.
+- [May 8, 2025]: Same error with `npx tailwindcss --version` on Node.js 22.14.0 (tailwindcss@4.1.5). Downgraded to Node.js 20.x and reinstalled npm.
+- [May 8, 2025]: Error persisted on Node.js 20.19.1. Fixed by resetting npm cache, setting registry to https://registry.npmjs.org/, reinstalling tailwindcss@3.4.1, and manually creating config files.
+- [May 8, 2025]: “module is not defined in ES module scope” when running `npm run dev`. Cursor fixed by renaming postcss.config.js to postcss.config.cjs. Learned to use .cjs for CommonJS configs in Vite projects.
+
+  To-Do List
 
 Start Phase 1: Set up React with Vite and Tailwind CSS.  
 Create FUTURE_IMPROVEMENTS.md with initial format.  
@@ -51,33 +57,36 @@ Phase Checklists
 ### Phase 1: Project Setup and Planning
 
 - [x] Install Node.js, npm, and Git
-  - [x] Verify Node.js 20.x (`node -v`) v22.14.0
-  - [x] Verify npm 10.x (`npm -v`) 10.9.2
-  - [x] Verify Git 2.x (`git -v`) 2.47.1.windows.2
+  - [x] Verify Node.js 20.x (`node -v`)
+  - [x] Verify npm 10.x (`npm -v`)
+  - [x] Verify Git 2.x (`git -v`)
+  - [x] Install if missing (e.g., `brew install node@20`, `brew install git`)
 - [x] Install Cursor (paid $20/month plan)
   - [x] Download from cursor.com and sign in
   - [x] Enable AI features (Tab, Composer, reindexing)
 - [x] Create a GitHub repository
   - [x] Create public repository `hairstyles-app` on github.com
   - [x] Add .gitignore (Node template: node_modules, .env, dist)
-  - [x] Clone to local: `git clone https://github.com/Phronesis2025/hairstyles-app.git`
+  - [x] Clone to local: `git clone https://github.com/your-username/hairstyles-app.git`
   - [x] Add PROGRESS.md and FUTURE_IMPROVEMENTS.md
 - [x] Initialize React frontend with Vite
   - [x] Run `npm create vite@latest client -- --template react`
   - [x] Install dependencies: `cd client && npm install`
   - [x] Test locally: `npm run dev` (localhost:5173)
   - [x] Clean up App.jsx to minimal component with Great Clips header
-
-Set up Tailwind CSS  
- Install tailwindcss, postcss, autoprefixer  
- Create tailwind.config.js with Great Clips colors (#00A651, #FFFFFF, #333333)  
- Add Tailwind directives to index.css  
- Import Inter font via Google Fonts
-
-Initialize Node.js/Express backend  
- Create server folder and run npm init -y  
- Install express, dotenv  
- Create server.js with a /health route
+- [x] Set up Tailwind CSS
+  - [x] Install: `npm install -D tailwindcss postcss autoprefixer`
+  - [x] Initialize: `npx tailwindcss init -p`
+  - [x] Configure tailwind.config.js with Great Clips colors (#00A651, #FFFFFF, #333333, #F5F5F5, #007BFF)
+  - [x] Update index.css with Tailwind directives and Inter font
+  - [x] Test styling in App.jsx (green header, white background)
+- [x] Initialize Node.js/Express backend
+  - [x] Create /server folder: `mkdir server && cd server`
+  - [x] Run `npm init -y`
+  - [x] Install: `npm install express dotenv`
+  - [x] Create server.js with /health route
+  - [x] Add .env with PORT=5000
+  - [x] Test: `node server.js` (localhost:5000/health)
 
 Set up Supabase  
  Create a Supabase project  
