@@ -40,6 +40,13 @@ build/Release
 
 # Dependency directories
 node_modules/
+npm-debug.log
+ yarn-error.log
+ .env
+ dist/
+ build/
+ .vercel/
+
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
