@@ -38,12 +38,13 @@
 ## Current State
 
 **Date**: May 9, 2025  
-**Progress**: Set up Supabase authentication in Phase 2. Installed `@supabase/supabase-js` in both frontend (`/client`) and backend (`/server`). Verified Google login configuration in Supabase dashboard and Google Cloud Console, ensuring the redirect URI (`https://tzqjcusfzcpyzjkvtwrg.supabase.co/auth/v1/callback`) is correctly set. Created Supabase clients in separate files: `/client/src/lib/supabaseClient.js` for frontend and `/server/supabaseClient.js` for backend. Tested initialization by logging the Supabase client objects in both frontend (`localhost:5173`) and backend (`localhost:5000`). Encountered a 404 error when navigating to `http://localhost:5000/` due to a missing root route; resolved by adding a temporary `/` route in `server.js`. Ready to create authentication routes in Express.  
+**Progress**: Created authentication routes in Express for Phase 2. Added `/api/auth/signup`, `/api/auth/login`, and `/api/auth/logout` routes in `/server/routes/auth.js`, using Supabase for Google login. Updated `/server/server.js` to use the new routes. Set up a frontend callback route at `/auth/callback` with React Router in `/client`, including a new `AuthCallback.jsx` component to handle post-authentication redirection. Tested the signup and login routes by initiating Google login, authenticating, and retrieving the user session. Tested the logout route using curl, confirming successful session termination. Initially navigated to the wrong URL (`/api/auth/signup` on the frontend), causing a React Router error; resolved by using the correct backend URL (`http://localhost:5000/api/auth/signup`). Ready to build the PhotoUpload.jsx component.  
 **Blockers**: None  
 **Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://tzqjcusfzcpyzjkvtwrg.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
 **Errors**:
 
 - [May 9, 2025]: "GET http://localhost:5000/ 404 (Not Found)" when navigating to the root URL. Fixed by adding a temporary root route (`/`) in `server.js` to return a welcome message.
+- [May 9, 2025]: "No routes matched location '/api/auth/signup'" in the frontend due to navigating to the backend route from the frontend context. Resolved by using the correct backend URL (`http://localhost:5000/api/auth/signup`) to initiate the OAuth flow.
 
 ## To-Do List
 
@@ -127,10 +128,10 @@
 - [x] Set up Supabase authentication
   - [x] Install @supabase/supabase-js in frontend and backend
   - [x] Configure Google login
-- [ ] Create authentication routes in Express
-  - [ ] Add /api/auth/signup route
-  - [ ] Add /api/auth/login route
-  - [ ] Add /api/auth/logout route
+- [x] Create authentication routes in Express
+  - [x] Add /api/auth/signup route
+  - [x] Add /api/auth/login route
+  - [x] Add /api/auth/logout route
 - [ ] Build PhotoUpload.jsx component
   - [ ] Install react-dropzone (npm install react-dropzone)
   - [ ] Style with Tailwind CSS (Great Clips design: green buttons, white card)
