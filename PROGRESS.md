@@ -26,7 +26,7 @@ Files for Review
 
 Current State
 **Date**: May 8, 2025
-**Progress**: Created .cursor/rules directory with coding-standards.mdc, project-setup.mdc, and frontend.mdc to guide Cursor’s AI behavior. Reindexed Cursor to apply rules. Tested rules with temporary component. Committed to GitHub. Ready to create FUTURE_IMPROVEMENTS.md with logged ideas.
+**Progress**: Created FUTURE_IMPROVEMENTS.md in /hairstyles-app with all logged future improvement ideas (18 total, including implemented nodemon and concurrently). Committed to GitHub. Ready to deploy initial project to Vercel for mobile testing.
 **Blockers**: None
 **Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://your-project-id.supabase.co).
 **Errors**:
@@ -97,9 +97,11 @@ Phase Checklists
   - [x] Create project-setup.mdc (ES modules, linting, README)
   - [x] Create frontend.mdc (Great Clips colors, Inter font, Tailwind)
   - [x] Reindex Cursor to recognize .mdc files
+- [x] Create FUTURE_IMPROVEMENTS.md with initial format
+  - [x] Add template with Overview, Ideas, References
+  - [x] Include initial ideas (e.g., nvm, Tailwind JIT)
 
-Create FUTURE_IMPROVEMENTS.md with initial format  
- Deploy initial project to Vercel  
+Deploy initial project to Vercel  
  Install Vercel CLI (npm i -g vercel)  
  Run vercel to deploy frontend and backend
 
