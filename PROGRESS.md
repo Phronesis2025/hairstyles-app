@@ -26,9 +26,9 @@ Files for Review
 
 Current State
 **Date**: May 8, 2025
-**Progress**: Initialized Node.js/Express backend in /hairstyles-app/server with ES module syntax, /health route, and dotenv for PORT configuration. Installed express and dotenv, set PORT=5000. Tested at localhost:5000/health with JSON response using npm run dev (nodemon). Verified concurrently runs both servers from root. Committed to GitHub. Ready for Supabase setup.
+**Progress**: Set up Supabase project hairstyles-app with Google login and a public photos bucket for storage. Added SUPABASE_URL and SUPABASE_ANON_KEY to /server/.env. Committed changes (excluding .env) to GitHub. Ready to create .cursor/rules directory and .mdc files.
 **Blockers**: None
-**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app).
+**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://your-project-id.supabase.co).
 **Errors**:
 
 - [May 8, 2025]: “npm error could not determine executable to run” when running `npx tailwindcss init -p`. Fixed by clearing npm cache and reinstalling dependencies.
@@ -87,6 +87,11 @@ Phase Checklists
   - [x] Create server.js with /health route
   - [x] Add .env with PORT=5000
   - [x] Test: `npm run dev` (localhost:5000/health)
+- [x] Set up Supabase
+  - [x] Create project at supabase.com (name: hairstyles-app)
+  - [x] Enable Google login (add OAuth credentials from console.cloud.google.com)
+  - [x] Create public bucket `photos` for images
+  - [x] Copy URL and anon key to server/.env
 
 Set up Supabase  
  Create a Supabase project  
