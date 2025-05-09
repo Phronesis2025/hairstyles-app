@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+description: Project initialization guidelinesglobs: *
+
+Reference @file package.json for dependencies
+Use modern ES modules (import/export)
+Ensure code is linted with ESLint
+Include a README.md with project overview
+
+
+

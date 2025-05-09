@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+description: React frontend styling rulesglobs: *.jsxtags: react, frontend, tailwind
+
+Use functional components
+Apply Tailwind CSS with Great Clips colors: gc-green (#00A651), gc-white (#FFFFFF), gc-dark-gray (#333333), gc-light-gray (#F5F5F5), gc-blue (#007BFF)
+Use Inter font via Google Fonts
+Ensure mobile responsiveness with Tailwind breakpoints (sm:, md:)
+Style buttons with rounded gc-green background
+Use one-tap actions for uploads, swiping, saving
+Reference @file ../client/tailwind.config.js
+
+

@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+description: General coding standardsglobs: *.js, *.jsx
+
+Use camelCase for variable and function names
+Include JSDoc comments for functions
+Follow ESLint rules
+Use single quotes for strings
+
+
