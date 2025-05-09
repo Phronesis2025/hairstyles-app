@@ -38,13 +38,15 @@
 ## Current State
 
 **Date**: May 9, 2025  
-**Progress**: Created authentication routes in Express for Phase 2. Added `/api/auth/signup`, `/api/auth/login`, and `/api/auth/logout` routes in `/server/routes/auth.js`, using Supabase for Google login. Updated `/server/server.js` to use the new routes. Set up a frontend callback route at `/auth/callback` with React Router in `/client`, including a new `AuthCallback.jsx` component to handle post-authentication redirection. Tested the signup and login routes by initiating Google login, authenticating, and retrieving the user session. Tested the logout route using curl, confirming successful session termination. Initially navigated to the wrong URL (`/api/auth/signup` on the frontend), causing a React Router error; resolved by using the correct backend URL (`http://localhost:5000/api/auth/signup`). Ready to build the PhotoUpload.jsx component.  
+**Progress**: Built the `PhotoUpload.jsx` component in Phase 2. Installed `react-dropzone` in the frontend (`/client`) and created the component in `/client/src/components/PhotoUpload.jsx`. The component allows users to upload photos, validates that files are JPEG or PNG, and requires users to be signed in (using Supabase auth). Styled the component with Tailwind CSS to match the Great Clips design (white card, green accents, dark gray text). Integrated the component into `App.jsx` and added a "Sign Out" button for testing. Tested the upload functionality, confirming it works when signed in. The "Sign Out" button initially didn’t work due to a session persistence issue; fixed by adding `supabase.auth.refreshSession()` after sign-out to ensure the client updates. Noted a violation of Rule 2 (No Commented-Out Code) in a previous response; corrected by providing the full, clean `App.jsx` code. Ready to create the `/api/upload` route for storing photos in Supabase.  
 **Blockers**: None  
 **Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://tzqjcusfzcpyzjkvtwrg.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
 **Errors**:
 
 - [May 9, 2025]: "GET http://localhost:5000/ 404 (Not Found)" when navigating to the root URL. Fixed by adding a temporary root route (`/`) in `server.js` to return a welcome message.
 - [May 9, 2025]: "No routes matched location '/api/auth/signup'" in the frontend due to navigating to the backend route from the frontend context. Resolved by using the correct backend URL (`http://localhost:5000/api/auth/signup`) to initiate the OAuth flow.
+- [May 9, 2025]: "Sign Out button not working" due to session persistence in the Supabase client. Fixed by adding `supabase.auth.refreshSession()` after sign-out to ensure the session is cleared.
+- [May 9, 2025]: Violated Rule 2 (No Commented-Out Code) by commenting out sections in `App.jsx`. Corrected by providing the full, clean code in the next response.
 
 ## To-Do List
 
@@ -132,10 +134,10 @@
   - [x] Add /api/auth/signup route
   - [x] Add /api/auth/login route
   - [x] Add /api/auth/logout route
-- [ ] Build PhotoUpload.jsx component
-  - [ ] Install react-dropzone (npm install react-dropzone)
-  - [ ] Style with Tailwind CSS (Great Clips design: green buttons, white card)
-  - [ ] Validate image formats (JPEG, PNG)
+- [x] Build PhotoUpload.jsx component
+  - [x] Install react-dropzone (npm install react-dropzone)
+  - [x] Style with Tailwind CSS (Great Clips design: green buttons, white card)
+  - [x] Validate image formats (JPEG, PNG)
 - [ ] Create /api/upload route
   - [ ] Install multer (npm install multer)
   - [ ] Upload photos to Supabase Storage

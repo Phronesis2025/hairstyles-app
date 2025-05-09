@@ -1,7 +1,40 @@
 import React from "react";
+import { supabase } from "./lib/supabaseClient";
+import PhotoUpload from "./components/PhotoUpload.jsx";
 import "./App.css";
 
 function App() {
+  const handleSignOut = async () => {
+    console.log("Attempting to sign out...");
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
+    console.log("Current session before sign out:", session);
+
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error);
+      return;
+    }
+
+    console.log("Sign out successful");
+
+    // Force a session refresh to ensure the client updates
+    await supabase.auth.refreshSession();
+    const {
+      data: { session: newSession },
+      error: newSessionError,
+    } = await supabase.auth.getSession();
+    console.log("Session after sign out:", newSession);
+
+    if (newSession) {
+      console.warn("Session still exists after sign out. Forcing UI update.");
+    }
+
+    window.location.reload(); // Refresh to update UI
+  };
+
   return (
     <div className="min-h-screen bg-white font-inter">
       {/* Navigation Bar */}
@@ -14,9 +47,12 @@ function App() {
           >
             Home
           </a>
-          <a href="#" className="text-gray-600 hover:text-green-600">
-            Login
-          </a>
+          <button
+            onClick={handleSignOut}
+            className="text-gray-600 hover:text-green-600"
+          >
+            Sign Out
+          </button>
         </div>
       </nav>
 
@@ -30,7 +66,10 @@ function App() {
           look for your clients. Fast, easy, and mobile-friendly.
         </p>
         <div className="flex justify-center space-x-4">
-          <button className="bg-green-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-green-700 transition">
+          <a
+            href="http://localhost:5000/api/auth/signup"
+            className="bg-green-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-green-700 transition"
+          >
             <svg
               className="w-5 h-5"
               fill="none"
@@ -44,11 +83,14 @@ function App() {
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
               />
             </svg>
-            <span>Upload Photo</span>
-          </button>
-          <button className="border border-green-600 text-green-600 px-6 py-3 rounded-full hover:bg-green-600 hover:text-white transition">
-            Get Started
-          </button>
+            <span>Sign Up with Google</span>
+          </a>
+          <a
+            href="http://localhost:5000/api/auth/login"
+            className="border border-green-600 text-green-600 px-6 py-3 rounded-full hover:bg-green-600 hover:text-white transition"
+          >
+            Sign In with Google
+          </a>
         </div>
       </section>
 
@@ -164,6 +206,14 @@ function App() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Photo Upload Section */}
+      <section className="py-16 px-4">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
+          Upload a Photo
+        </h2>
+        <PhotoUpload />
       </section>
     </div>
   );
