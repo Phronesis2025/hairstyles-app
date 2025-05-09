@@ -38,18 +38,12 @@
 ## Current State
 
 **Date**: May 9, 2025  
-**Progress**: Updated `/client/src/App.jsx` to match the provided screenshot. The UI now features a white background (#FFFFFF), a navigation bar with "HairViz" logo and "Home"/"Login" links, a hero section with "Visualize the Perfect Hairstyle" headline, two buttons ("Upload Photo" and "Get Started"), and a "How It Works" section with four steps in a grid layout (Upload, Swipe, Generate, Save). Each step uses white cards with green icons, dark gray headings, and light gray text, aligning with Great Clips' design (green #00A651, white #FFFFFF, dark gray #333333, Inter font). Tested locally on `localhost:5173` and on Vercel at `[frontend-url]`. The layout is mobile-friendly, with cards stacking vertically on smaller screens. Committed changes to GitHub and finalized Phase 1.  
+**Progress**: Set up Supabase authentication in Phase 2. Installed `@supabase/supabase-js` in both frontend (`/client`) and backend (`/server`). Verified Google login configuration in Supabase dashboard and Google Cloud Console, ensuring the redirect URI (`https://tzqjcusfzcpyzjkvtwrg.supabase.co/auth/v1/callback`) is correctly set. Created Supabase clients in separate files: `/client/src/lib/supabaseClient.js` for frontend and `/server/supabaseClient.js` for backend. Tested initialization by logging the Supabase client objects in both frontend (`localhost:5173`) and backend (`localhost:5000`). Encountered a 404 error when navigating to `http://localhost:5000/` due to a missing root route; resolved by adding a temporary `/` route in `server.js`. Ready to create authentication routes in Express.  
 **Blockers**: None  
-**Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://your-project-id.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
+**Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://tzqjcusfzcpyzjkvtwrg.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
 **Errors**:
 
-- [May 8, 2025]: “npm error could not determine executable to run” when running `npx tailwindcss init -p`. Fixed by clearing npm cache and reinstalling dependencies.
-- [May 8, 2025]: Same error with `npx tailwindcss --version` on Node.js 22.14.0 (tailwindcss@4.1.5). Downgraded to Node.js 20.x and reinstalled npm.
-- [May 8, 2025]: Error persisted on Node.js 20.19.1. Fixed by resetting npm cache, setting registry to https://registry.npmjs.org/, reinstalling tailwindcss@3.4.1, and manually creating config files.
-- [May 8, 2025]: “module is not defined in ES module scope” when running `npm run dev`. Cursor fixed by renaming postcss.config.js to postcss.config.cjs. Learned to use .cjs for CommonJS configs in Vite projects.
-- [May 8, 2025]: “path /server/client does not exist” when deploying backend to Vercel. Fixed by creating a separate Vercel project (hairstyles-app-backend) for /server. Terminal deployment failed, so switched to importing GitHub repo via Vercel website.
-- [May 8, 2025]: “404 NOT_FOUND” on backend /health route after Vercel deployment. Locally, “EACCES: permission denied 5000PORT=5000” due to malformed PORT in .env. Fixed by correcting .env syntax, updating Vercel environment variables.
-- [May 8, 2025]: “404 NOT_FOUND” persisted on Vercel due to serverless incompatibility. Fixed by updating server.js for Vercel serverless functions and adjusting vercel.json routing.
+- [May 9, 2025]: "GET http://localhost:5000/ 404 (Not Found)" when navigating to the root URL. Fixed by adding a temporary root route (`/`) in `server.js` to return a welcome message.
 
 ## To-Do List
 
@@ -130,9 +124,9 @@
 
 **Goal**: Implement user accounts and photo upload functionality.
 
-- [ ] Set up Supabase authentication
-  - [ ] Install @supabase/supabase-js in frontend and backend
-  - [ ] Configure email/password and Google login
+- [x] Set up Supabase authentication
+  - [x] Install @supabase/supabase-js in frontend and backend
+  - [x] Configure Google login
 - [ ] Create authentication routes in Express
   - [ ] Add /api/auth/signup route
   - [ ] Add /api/auth/login route

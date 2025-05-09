@@ -4,18 +4,20 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-app.get("/health", (req, res) => {
-  res.json({ status: "Server deployed" });
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the Hairstyle Visualization API" });
 });
 
-// For local development
-if (process.env.NODE_ENV !== "production") {
-  const port = process.env.PORT || 5000;
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+app.get("/health", (req, res) => {
+  res.json({ status: "Server running" });
+});
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
-// Export for Vercel serverless function
 export default app;
