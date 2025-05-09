@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 
 app.get("/health", (req, res) => {
-  res.json({ status: "Server running" });
+  res.json({ status: "Server deployed" });
 });
 
 // For local development
