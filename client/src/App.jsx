@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "./lib/supabaseClient";
 import PhotoUpload from "./components/PhotoUpload.jsx";
 import "./App.css";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check initial session
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session);
+    };
+
+    checkSession();
+
+    // Listen for auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log("Auth state changed:", event, session);
+        setIsAuthenticated(!!session);
+      }
+    );
+
+    // Clean up the listener on component unmount
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
   const handleSignOut = async () => {
     console.log("Attempting to sign out...");
     const {
@@ -47,12 +74,21 @@ function App() {
           >
             Home
           </a>
-          <button
-            onClick={handleSignOut}
-            className="text-gray-600 hover:text-green-600"
-          >
-            Sign Out
-          </button>
+          {isAuthenticated ? (
+            <button
+              onClick={handleSignOut}
+              className="text-gray-600 hover:text-green-600"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <a
+              href="http://localhost:5000/api/auth/login"
+              className="text-gray-600 hover:text-green-600"
+            >
+              Sign In
+            </a>
+          )}
         </div>
       </nav>
 
