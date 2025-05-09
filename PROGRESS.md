@@ -26,15 +26,18 @@ Files for Review
 
 Current State
 **Date**: May 8, 2025
-**Progress**: Created FUTURE_IMPROVEMENTS.md in /hairstyles-app with all logged future improvement ideas (18 total, including implemented nodemon and concurrently). Committed to GitHub. Ready to deploy initial project to Vercel for mobile testing.
+**Progress**: Deployed initial project to Vercel via website import from GitHub repo. Created hairstyles-app-frontend at [frontend-url] for /client and hairstyles-app-backend at [backend-url] for /server. Fixed local “EACCES: permission denied 5000PORT=5000” by correcting .env syntax. Encountered 404 on backend /health route on Vercel due to serverless incompatibility. Fixed by updating server.js for Vercel serverless functions (export app, conditional listen) and adjusting vercel.json routing. Tested on mobile: frontend UI matches Great Clips design, backend /health returns {"status":"Server running"}. Verified auto-deploys with a test change. Committed to GitHub. Ready to finalize Phase 1 by committing all changes.
 **Blockers**: None
-**Environment**: Local development (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://your-project-id.supabase.co).
+**Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://your-project-id.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).
 **Errors**:
 
 - [May 8, 2025]: “npm error could not determine executable to run” when running `npx tailwindcss init -p`. Fixed by clearing npm cache and reinstalling dependencies.
 - [May 8, 2025]: Same error with `npx tailwindcss --version` on Node.js 22.14.0 (tailwindcss@4.1.5). Downgraded to Node.js 20.x and reinstalled npm.
 - [May 8, 2025]: Error persisted on Node.js 20.19.1. Fixed by resetting npm cache, setting registry to https://registry.npmjs.org/, reinstalling tailwindcss@3.4.1, and manually creating config files.
 - [May 8, 2025]: “module is not defined in ES module scope” when running `npm run dev`. Cursor fixed by renaming postcss.config.js to postcss.config.cjs. Learned to use .cjs for CommonJS configs in Vite projects.
+- [May 8, 2025]: “path /server/client does not exist” when deploying backend to Vercel. Fixed by creating a separate Vercel project (hairstyles-app-backend) for /server. Terminal deployment failed, so switched to importing GitHub repo via Vercel website.
+- [May 8, 2025]: “404 NOT_FOUND” on backend /health route after Vercel deployment. Locally, “EACCES: permission denied 5000PORT=5000” due to malformed PORT in .env. Fixed by correcting .env syntax, updating Vercel environment variables.
+- [May 8, 2025]: “404 NOT_FOUND” persisted on Vercel due to serverless incompatibility. Fixed by updating server.js for Vercel serverless functions and adjusting vercel.json routing.
 
   To-Do List
 
@@ -100,10 +103,11 @@ Phase Checklists
 - [x] Create FUTURE_IMPROVEMENTS.md with initial format
   - [x] Add template with Overview, Ideas, References
   - [x] Include initial ideas (e.g., nvm, Tailwind JIT)
-
-Deploy initial project to Vercel  
- Install Vercel CLI (npm i -g vercel)  
- Run vercel to deploy frontend and backend
+- [x] Deploy initial project to Vercel
+  - [x] Install Vercel CLI: `npm install -g vercel`
+  - [x] Deploy frontend: `cd client && vercel` (link to GitHub)
+  - [x] Deploy backend: `cd server && vercel` (add vercel.json)
+  - [x] Test URLs on mobile (frontend, backend /health)
 
 Commit changes to GitHub  
  Update PROGRESS.md with Phase 1 status
