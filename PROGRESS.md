@@ -38,7 +38,7 @@
 ## Current State
 
 **Date**: May 9, 2025  
-**Progress**: Created `backend.mdc` for Express guidelines in Phase 2. Added the file to `.cursor/rules/backend.mdc`, defining coding standards for the Express backend, including file structure, route naming, Supabase integration, error handling, and security best practices. Reindexed Cursor to recognize the new file and tested the guidelines by prompting Cursor to generate a new route, confirming adherence to the defined standards. Previously tested authentication and upload flows end-to-end, created the Supabase database schema, and added a camera option to `PhotoUpload.jsx`. Ready to deploy updates to Vercel.  
+**Progress**: Deployed updates to Vercel in Phase 2. Set up environment variables in Vercel for both frontend (`VITE_BACKEND_URL`) and backend (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `PORT`). Updated `PhotoUpload.jsx` and `App.jsx` to use the dynamic backend URL (`import.meta.env.VITE_BACKEND_URL`) for production API calls. Encountered a "404 Not Found" error due to `VITE_BACKEND_URL` being undefined; fixed by verifying the environment variable in Vercel, triggering a redeployment, and adding a fallback URL with improved error handling in `PhotoUpload.jsx`. Tested the deployed app on mobile, confirming sign-up/login, photo uploads (both upload and camera modes), sign-out, and mobile responsiveness. Previously created `backend.mdc` for Express guidelines, tested authentication/upload flows, created the Supabase database schema, and added a camera option to `PhotoUpload.jsx`. Ready to commit changes to GitHub.  
 **Blockers**: None  
 **Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://tzqjcusfzcpyzjkvtwrg.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
 **Errors**:
@@ -53,6 +53,7 @@
 - [May 9, 2025]: "AuthSessionMissingError: Auth session missing!" when setting the session on the backend. Fixed by passing the token directly in the Storage request headers instead of using `setSession`.
 - [May 9, 2025]: "insert or update on table 'photos' violates foreign key constraint 'fk_user_id'" due to existing rows in `photos` with `user_id` values not present in `users`. Fixed by populating `users` with data from `auth.users` and cleaning up invalid rows in `photos`.
 - [May 9, 2025]: "Failed to save metadata to database" when uploading a photo as a new user because the user was not added to the `users` table. Fixed by removing the trigger on `auth.users` (due to schema restrictions) and updating `AuthCallback.jsx` to insert users after authentication.
+- [May 9, 2025]: "Failed to execute 'json' on 'Response': Unexpected end of JSON input" in the deployed app due to `VITE_BACKEND_URL` being undefined, resulting in a 404 error. Fixed by verifying the environment variable in Vercel, triggering a redeployment, and adding a fallback URL with improved error handling in `PhotoUpload.jsx`.
 
 ## To-Do List
 
@@ -156,7 +157,7 @@
   - [x] Sign up/login via browser
   - [x] Upload a test photo and verify storage
 - [x] Create backend.mdc for Express guidelines
-- [ ] Deploy updates to Vercel
+- [x] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update PROGRESS.md with Phase 2 status
 
