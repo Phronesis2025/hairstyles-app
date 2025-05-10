@@ -11,64 +11,67 @@ const PhotoUpload = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  const backendUrl =
+    import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   // Handle file upload via drag-and-drop or file selection
-  const onDrop = useCallback(async (acceptedFiles) => {
-    setError(null);
-    setPreview(null);
-    setUploadedUrl(null);
-
-    const file = acceptedFiles[0];
-    if (!file) {
-      setError("Please upload a file.");
-      return;
-    }
-
-    if (!["image/jpeg", "image/png"].includes(file.type)) {
-      setError("Please upload a JPEG or PNG image.");
-      return;
-    }
-
-    const previewUrl = URL.createObjectURL(file);
-    setPreview(previewUrl);
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) {
-      setError("Please sign in to upload photos.");
-      URL.revokeObjectURL(previewUrl);
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      setError(null);
       setPreview(null);
-      return;
-    }
+      setUploadedUrl(null);
 
-    const formData = new FormData();
-    formData.append("photo", file);
+      const file = acceptedFiles[0];
+      if (!file) {
+        setError("Please upload a file.");
+        return;
+      }
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
-        {
+      if (!["image/jpeg", "image/png"].includes(file.type)) {
+        setError("Please upload a JPEG or PNG image.");
+        return;
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+      setPreview(previewUrl);
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) {
+        setError("Please sign in to upload photos.");
+        URL.revokeObjectURL(previewUrl);
+        setPreview(null);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      try {
+        const response = await fetch(`${backendUrl}/api/upload`, {
           method: "POST",
           body: formData,
           headers: {
             Authorization: `Bearer ${session.access_token}`,
           },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || "Failed to upload photo.");
         }
-      );
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to upload photo.");
+        const result = await response.json();
+        setUploadedUrl(result.url);
+      } catch (err) {
+        setError(err.message);
+        setPreview(null);
+        URL.revokeObjectURL(previewUrl);
       }
-
-      setUploadedUrl(result.url);
-    } catch (err) {
-      setError(err.message);
-      setPreview(null);
-      URL.revokeObjectURL(previewUrl);
-    }
-  }, []);
+    },
+    [backendUrl]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -146,23 +149,20 @@ const PhotoUpload = () => {
     formData.append("photo", file);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${session.access_token}`,
-          },
-        }
-      );
-
-      const result = await response.json();
+      const response = await fetch(`${backendUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to upload photo.");
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to upload photo.");
       }
 
+      const result = await response.json();
       setUploadedUrl(result.url);
     } catch (err) {
       setError(err.message);
