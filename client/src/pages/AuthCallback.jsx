@@ -11,15 +11,27 @@ const AuthCallback = () => {
 
       if (error) {
         console.error("Error getting session:", error);
-        navigate("/"); // Redirect to home on error
+        navigate("/");
         return;
       }
 
       if (data.session) {
-        console.log("User authenticated:", data.session.user);
-        navigate("/"); // Redirect to home after successful login
+        const user = data.session.user;
+        console.log("User authenticated:", user);
+
+        // Insert the user into the users table
+        const { error: insertError } = await supabase.from("users").upsert({
+          user_id: user.id,
+          email: user.email,
+        });
+
+        if (insertError) {
+          console.error("Error inserting user into users table:", insertError);
+        }
+
+        navigate("/");
       } else {
-        navigate("/"); // Redirect to home if no session
+        navigate("/");
       }
     };
 

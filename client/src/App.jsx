@@ -83,7 +83,7 @@ function App() {
             </button>
           ) : (
             <a
-              href="http://localhost:5000/api/auth/login"
+              href={`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`}
               className="text-gray-600 hover:text-green-600"
             >
               Sign In
@@ -103,7 +103,7 @@ function App() {
         </p>
         <div className="flex justify-center space-x-4">
           <a
-            href="http://localhost:5000/api/auth/signup"
+            href={`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`}
             className="bg-green-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-green-700 transition"
           >
             <svg
@@ -122,7 +122,7 @@ function App() {
             <span>Sign Up with Google</span>
           </a>
           <a
-            href="http://localhost:5000/api/auth/login"
+            href={`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`}
             className="border border-green-600 text-green-600 px-6 py-3 rounded-full hover:bg-green-600 hover:text-white transition"
           >
             Sign In with Google

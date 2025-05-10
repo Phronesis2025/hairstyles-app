@@ -38,7 +38,7 @@
 ## Current State
 
 **Date**: May 9, 2025  
-**Progress**: Created the `/api/upload` route in Phase 2. Installed `multer` in the backend (`/server`) and set up the route in `/server/routes/upload.js`. The route handles photo uploads, validates file types (JPEG/PNG), uploads files to Supabase Storage (`photos` bucket), and saves metadata (user ID, URL, timestamp) to a `photos` table in Supabase. Created the `photos` table in Supabase to store metadata. Updated `PhotoUpload.jsx` to call the new route and display the uploaded photo’s URL. Encountered a CORS error when the frontend (`http://localhost:5173`) tried to access the backend (`http://localhost:5000/api/upload`); fixed by installing `cors` middleware and configuring it to allow requests from `http://localhost:5173`. Encountered a "401 Unauthorized" error due to the backend not receiving the session token; fixed by passing the Supabase session token in the `Authorization` header from the frontend and verifying it in the backend. Encountered a "403 Unauthorized" error due to a row-level security policy violation in Supabase Storage; fixed by updating the `photos` bucket policies to allow uploads by authenticated users. Encountered an "AuthSessionMissingError" when setting the session on the backend; fixed by passing the token directly in the Storage request headers. Added a camera option to `PhotoUpload.jsx`, allowing users to either take a photo or upload a photo, using the `getUserMedia` API for camera access. Tested both upload and camera modes, confirming photos are stored in Supabase Storage and metadata is saved in the database. Improved the navigation bar to dynamically show "Sign In" when signed out and "Sign Out" when signed in, using Supabase auth state. Ready to create the Supabase database schema for users and photos.  
+**Progress**: Created `backend.mdc` for Express guidelines in Phase 2. Added the file to `.cursor/rules/backend.mdc`, defining coding standards for the Express backend, including file structure, route naming, Supabase integration, error handling, and security best practices. Reindexed Cursor to recognize the new file and tested the guidelines by prompting Cursor to generate a new route, confirming adherence to the defined standards. Previously tested authentication and upload flows end-to-end, created the Supabase database schema, and added a camera option to `PhotoUpload.jsx`. Ready to deploy updates to Vercel.  
 **Blockers**: None  
 **Environment**: Local (Node.js 20.19.1, npm 10.8.2, Cursor paid plan, localhost:5173, localhost:5000); GitHub (https://github.com/your-username/hairstyles-app); Supabase (https://tzqjcusfzcpyzjkvtwrg.supabase.co); Vercel (frontend: [frontend-url], backend: [backend-url]).  
 **Errors**:
@@ -51,6 +51,8 @@
 - [May 9, 2025]: "401 Unauthorized" when uploading a photo due to the backend not receiving the Supabase session token. Fixed by passing the session token in the `Authorization` header and verifying it in the backend.
 - [May 9, 2025]: "403 Unauthorized" when uploading to Supabase Storage due to a row-level security policy violation. Fixed by updating the `photos` bucket policies to allow uploads by authenticated users.
 - [May 9, 2025]: "AuthSessionMissingError: Auth session missing!" when setting the session on the backend. Fixed by passing the token directly in the Storage request headers instead of using `setSession`.
+- [May 9, 2025]: "insert or update on table 'photos' violates foreign key constraint 'fk_user_id'" due to existing rows in `photos` with `user_id` values not present in `users`. Fixed by populating `users` with data from `auth.users` and cleaning up invalid rows in `photos`.
+- [May 9, 2025]: "Failed to save metadata to database" when uploading a photo as a new user because the user was not added to the `users` table. Fixed by removing the trigger on `auth.users` (due to schema restrictions) and updating `AuthCallback.jsx` to insert users after authentication.
 
 ## To-Do List
 
@@ -147,13 +149,13 @@
   - [x] Install multer (npm install multer)
   - [x] Upload photos to Supabase Storage
   - [x] Save metadata (e.g., s3Url, userId) to Supabase database
-- [ ] Create Supabase database schema
-  - [ ] Define User table (email, userId)
-  - [ ] Define Photo table (userId, s3Url, timestamp)
-- [ ] Test authentication and upload flows
-  - [ ] Sign up/login via browser
-  - [ ] Upload a test photo and verify storage
-- [ ] Create backend.mdc for Express guidelines
+- [x] Create Supabase database schema
+  - [x] Define User table (email, userId)
+  - [x] Define Photo table (userId, s3Url, timestamp)
+- [x] Test authentication and upload flows
+  - [x] Sign up/login via browser
+  - [x] Upload a test photo and verify storage
+- [x] Create backend.mdc for Express guidelines
 - [ ] Deploy updates to Vercel
 - [ ] Commit changes to GitHub
 - [ ] Update PROGRESS.md with Phase 2 status

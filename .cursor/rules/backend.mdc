@@ -1,0 +1,78 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Backend Guidelines for Express
+ ## Overview
+ This file defines coding guidelines for the Express backend in the Hairstyle Visualization App project. These rules ensure consistency, maintainability, and best practices for the Node.js/Express server.
+
+ ## File Structure
+ - Organize routes in a `/routes` directory (e.g., `/server/routes/auth.js`, `/server/routes/upload.js`).
+ - Keep the main server file (`server.js`) minimal, delegating route logic to separate files.
+ - Use `supabaseClient.js` for Supabase initialization, keeping credentials in `.env`.
+
+ ## Coding Standards
+ - Use ES modules (`import`/`export`) for all files (consistent with project setup in `project-setup.mdc`).
+ - Follow camelCase for variable and function names (as per `coding-standards.mdc`).
+ - Use async/await for asynchronous operations (e.g., Supabase queries, file uploads).
+ - Add JSDoc comments for all route handlers to document purpose, parameters, and return values.
+
+ ## Route Guidelines
+ - Prefix all API routes with `/api` (e.g., `/api/auth/signup`, `/api/upload`).
+ - Use RESTful naming conventions:
+   - GET for retrieving data (e.g., `/api/health`).
+   - POST for creating resources (e.g., `/api/upload`).
+ - Include authentication checks for routes that require user access:
+   - Extract the `Authorization` header and verify the user with `supabase.auth.getUser(token)`.
+   - Return `401 Unauthorized` if authentication fails.
+ - Handle errors consistently:
+   - Return `400` for client errors (e.g., invalid file type).
+   - Return `500` for server errors (e.g., database failures), including detailed error messages in the response.
+
+ ## Supabase Integration
+ - Use the Supabase client initialized in `supabaseClient.js` for all database and Storage operations.
+ - Pass the `Authorization` token in Storage requests to ensure proper authentication (e.g., `headers: { Authorization: Bearer ${token} }`).
+ - Log detailed errors for debugging (e.g., `console.error('Supabase error:', error)`).
+
+ ## Error Handling
+ - Wrap route handlers in try/catch blocks to catch and handle errors.
+ - Log errors to the console for debugging (e.g., `console.error('Error:', err)`).
+ - Return JSON responses with an `error` field and `details` for debugging (e.g., `{ error: 'Failed to upload', details: err.message }`).
+
+ ## Performance and Security
+ - Use `multer` for file uploads, storing files in memory (`multer.memoryStorage()`) to avoid disk usage.
+ - Validate file types server-side (e.g., only allow JPEG/PNG for uploads).
+ - Ensure CORS is configured to allow requests only from the frontend (`http://localhost:5173` locally, and the Vercel frontend URL in production).
+ - Avoid hardcoding sensitive data; use environment variables (e.g., `process.env.SUPABASE_URL`).
+
+ ## Example Route
+ ```javascript
+ /**
+  * POST /api/upload - Upload a photo to Supabase Storage
+  * @param {Request} req - Express request object with file in `req.file`
+  * @param {Response} res - Express response object
+  * @returns {Object} JSON response with the uploaded photo URL
+  */
+ router.post('/upload', upload.single('photo'), async (req, res) => {
+   try {
+     const authHeader = req.headers.authorization;
+     if (!authHeader) {
+       return res.status(401).json({ error: 'Unauthorized. Missing token.' });
+     }
+
+     const token = authHeader.split(' ')[1];
+     const { data: { user }, error } = await supabase.auth.getUser(token);
+     if (error || !user) {
+       return res.status(401).json({ error: 'Unauthorized. Invalid token.' });
+     }
+
+     // Route logic here...
+   } catch (err) {
+     console.error('Error uploading photo:', err);
+     res.status(500).json({ error: 'Server error', details: err.message });
+   }
+ });
+ ```
+
+
